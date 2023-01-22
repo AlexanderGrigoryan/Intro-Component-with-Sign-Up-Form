@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
+import Form from "./components/Form";
 import Information from "./components/Information";
 import GlobalStyles from "./GlobalStyles";
 import MobileBackground from "./img/bg-intro-mobile.png";
@@ -21,6 +22,7 @@ function App() {
       <MainContainer>
         <Content>
           <Information />
+          <Form />
         </Content>
       </MainContainer>
     </>
@@ -34,6 +36,7 @@ const MainContainer = styled.main`
   padding: 0 24px;
   width: 100%;
   height: 100%;
+  /* min-height: 100vh; */
 `;
 
 const Content = styled.div`

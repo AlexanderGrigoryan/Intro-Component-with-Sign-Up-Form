@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import styled from "styled-components";
+import { FieldErrorsImpl, SubmitHandler, useForm } from "react-hook-form";
+import styled, { css } from "styled-components";
 import schema from "../schema";
 import { FormTypes } from "../types";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -32,6 +32,7 @@ function Form() {
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputBlock>
           <Input
+            errors={errors}
             type="text"
             id="firstName"
             placeholder="First Name"
@@ -41,6 +42,7 @@ function Form() {
         </InputBlock>
         <InputBlock>
           <Input
+            errors={errors}
             type="text"
             id="lastName"
             placeholder="Last Name"
@@ -50,6 +52,7 @@ function Form() {
         </InputBlock>
         <InputBlock>
           <Input
+            errors={errors}
             type="email"
             id="email"
             placeholder="Email Address"
@@ -59,6 +62,7 @@ function Form() {
         </InputBlock>
         <InputBlock>
           <Input
+            errors={errors}
             type="password"
             id="password"
             placeholder="Password"
@@ -87,7 +91,8 @@ const Container = styled.div`
 `;
 
 const Info = styled.div`
-  width: 327px;
+  width: 100%;
+  max-width: 540px;
   border-radius: 10px;
   background: #5e54a4;
   box-shadow: 0px 8px 0px 0px #00000025;
@@ -98,6 +103,10 @@ const Info = styled.div`
   line-height: 26px;
   letter-spacing: 0.2678571045398712px;
   color: #ffffff;
+
+  @media screen and (min-width: 768px) {
+    padding: 18px 68px;
+  }
 `;
 
 const Span = styled.span`
@@ -105,8 +114,9 @@ const Span = styled.span`
 `;
 
 const FormContainer = styled.form`
-  width: 327px;
-  height: 442px;
+  width: 100%;
+  max-width: 540px;
+  min-height: 442px;
   border-radius: 10px;
   background: #ffffff;
   box-shadow: 0px 8px 0px 0px #00000025;
@@ -117,33 +127,44 @@ const FormContainer = styled.form`
   row-gap: 16px;
 `;
 
-const InputBlock = styled.div``;
-
-const Input = styled.input`
-  width: 279px;
-  height: 56px;
-  border-radius: 5px;
-  padding-left: 19.41px;
-  background: #ffffff;
-  border: 1px solid #dedede;
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 26px;
-  letter-spacing: 0.25px;
-  color: #3d3b48;
-
-  &::placeholder {
-    color: rgba(61, 59, 72, 0.75);
-  }
-
-  &:focus {
-    outline: 1px solid #5e54a4;
-  }
+const InputBlock = styled.div`
+  width: 100%;
+  max-width: 540px;
 `;
 
+const Input = styled.input(
+  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+    width: 100%;
+    height: 56px;
+    border-radius: 5px;
+    padding-left: 19.41px;
+    background: #ffffff;
+    border: ${props.errors.firstName?.message ||
+    props.errors.lastName?.message ||
+    props.errors.email?.message ||
+    props.errors.password?.message
+      ? "2px solid #FF7979"
+      : "1px solid #dedede"};
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 26px;
+    letter-spacing: 0.25px;
+    color: #3d3b48;
+
+    &::placeholder {
+      color: rgba(61, 59, 72, 0.75);
+    }
+
+    &:focus {
+      outline: 1px solid #5e54a4;
+    }
+  `
+);
+
 const Button = styled.button`
-  width: 279px;
+  width: 100%;
+  max-width: 540px;
   height: 56px;
   border-radius: 5px;
   background: #38cc8b;

@@ -41,10 +41,16 @@ const MainContainer = styled.main`
 
 const Content = styled.div`
   background-image: url(${MobileBackground});
-  background-repeat: no-repeat;
-  background-size: cover;
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
   width: 100%;
   height: 100%;
   min-height: 100vh;
- 
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 45px;
+  }
 `;

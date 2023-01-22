@@ -23,6 +23,10 @@ const Container = styled.div`
   row-gap: 16px;
   padding-top: 88px;
   margin-bottom: 64px;
+
+  @media screen and (min-width: 1024px) {
+    max-width: 525px;
+  }
 `;
 
 const Title = styled.h1`
@@ -31,6 +35,13 @@ const Title = styled.h1`
   line-height: 36px;
   letter-spacing: -0.2916666865348816px;
   color: #ffffff;
+
+  @media screen and (min-width: 1024px) {
+    font-size: 50px;
+    line-height: 55px;
+    letter-spacing: -0.5208333134651184px;
+    text-align: left;
+  }
 `;
 
 const Text = styled.p`
@@ -38,4 +49,8 @@ const Text = styled.p`
   font-weight: 500;
   line-height: 26px;
   color: #ffffff;
+
+  @media screen and (min-width: 1024px) {
+    text-align: left;
+  }
 `;

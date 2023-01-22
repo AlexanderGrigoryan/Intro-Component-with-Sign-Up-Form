@@ -1,18 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
+import schema from "../schema";
+import { FormTypes } from "../types";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 function Form() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<FormTypes>({
+    resolver: yupResolver(schema),
+  });
+
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const onSubmit: SubmitHandler<FormTypes> = (data) => {
+    setSubmitted(true);
+    reset();
+  };
+
   return (
     <Container>
       <Info>
         <Span>Try it free 7 days</Span> then $20/mo. thereafter
       </Info>
 
-      <FormContainer>
-        <Input type="text" id="firstName" placeholder="First Name" />
-        <Input type="text" id="lastName" placeholder="Last Name" />
-        <Input type="email" id="email" placeholder="Email Address" />
-        <Input type="password" id="password" placeholder="Password" />
+      <FormContainer onSubmit={handleSubmit(onSubmit)}>
+        <InputBlock>
+          <Input
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+            {...register("firstName")}
+          />
+          <Error>{errors.firstName && errors.firstName.message}</Error>
+        </InputBlock>
+        <InputBlock>
+          <Input
+            type="text"
+            id="lastName"
+            placeholder="Last Name"
+            {...register("lastName")}
+          />
+          <Error>{errors.lastName && errors.lastName.message}</Error>
+        </InputBlock>
+        <InputBlock>
+          <Input
+            type="email"
+            id="email"
+            placeholder="Email Address"
+            {...register("email")}
+          />
+          <Error>{errors.email && errors.email.message}</Error>
+        </InputBlock>
+        <InputBlock>
+          <Input
+            type="password"
+            id="password"
+            placeholder="Password"
+            {...register("password")}
+          />
+          <Error>{errors.password && errors.password.message}</Error>
+        </InputBlock>
         <Button type="submit">CLAIM YOUR FREE TRIAL</Button>
         <Terms>
           By clicking the button, you are agreeing to our{" "}
@@ -27,6 +80,10 @@ export default Form;
 
 const Container = styled.div`
   margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Info = styled.div`
@@ -59,6 +116,8 @@ const FormContainer = styled.form`
   flex-direction: column;
   row-gap: 16px;
 `;
+
+const InputBlock = styled.div``;
 
 const Input = styled.input`
   width: 279px;
@@ -113,4 +172,14 @@ const Link = styled.a`
   line-height: 21px;
   color: #ff7979;
   text-decoration: none;
+`;
+
+const Error = styled.p`
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: right;
+  color: #ff7979;
+  margin-top: 6px;
 `;

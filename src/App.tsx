@@ -1,7 +1,9 @@
 import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import styled from "styled-components";
+import Information from "./components/Information";
 import GlobalStyles from "./GlobalStyles";
+import MobileBackground from "./img/bg-intro-mobile.png";
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
       </HelmetProvider>
 
       <MainContainer>
-        <div></div>
+        <Content>
+          <Information />
+        </Content>
       </MainContainer>
     </>
   );
@@ -25,4 +29,18 @@ function App() {
 
 export default App;
 
-const MainContainer = styled.main``;
+const MainContainer = styled.main`
+  background-color: #ff637b;
+  padding: 0 24px;
+  width: 100%;
+  height: 100%;
+`;
+
+const Content = styled.div`
+  background-image: url(${MobileBackground});
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+`;

@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import styled from "styled-components";
+import GlobalStyles from "./GlobalStyles";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      <HelmetProvider>
+        <Helmet>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap"
+            rel="stylesheet"
+          />
+        </Helmet>
+      </HelmetProvider>
+
+      <MainContainer>
+        <div></div>
+      </MainContainer>
+    </>
   );
 }
 
 export default App;
+
+const MainContainer = styled.main``;

@@ -1,10 +1,10 @@
-import React from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import GlobalStyles from "./GlobalStyles";
 import styled from "styled-components";
 import Form from "./components/Form";
 import Information from "./components/Information";
-import GlobalStyles from "./GlobalStyles";
 import MobileBackground from "./img/bg-intro-mobile.png";
+import DesktopBackground from "./img/bg-intro-desktop.png";
 
 function App() {
   return (
@@ -32,25 +32,22 @@ function App() {
 export default App;
 
 const MainContainer = styled.main`
-  background-color: #ff637b;
-  padding: 0 24px;
   width: 100%;
-  height: 100%;
-  /* min-height: 100vh; */
+  padding: 0 24px;
+  background-color: #ff637b;
 `;
 
 const Content = styled.div`
   background-image: url(${MobileBackground});
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
   width: 100%;
-  height: 100%;
   min-height: 100vh;
+  padding-bottom: 50px;
 
   @media screen and (min-width: 1024px) {
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 45px;
+    background-image: url(${DesktopBackground});
   }
 `;

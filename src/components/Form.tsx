@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { FieldErrorsImpl, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import styled, { css } from "styled-components";
 import schema from "../schema";
 import { FormTypes } from "../types";
 import { yupResolver } from "@hookform/resolvers/yup";
+import ErrorIcon from "../img/icon-error.svg";
 
 function Form() {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<FormTypes>({
@@ -31,8 +31,11 @@ function Form() {
 
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputBlock>
+          {errors.firstName?.message ? (
+            <ErrorImg src={ErrorIcon} alt="error icon" />
+          ) : null}
           <Input
-            errors={errors}
+            error={Boolean(errors.firstName)}
             type="text"
             id="firstName"
             placeholder="First Name"
@@ -41,8 +44,11 @@ function Form() {
           <Error>{errors.firstName && errors.firstName.message}</Error>
         </InputBlock>
         <InputBlock>
+          {errors.lastName?.message ? (
+            <ErrorImg src={ErrorIcon} alt="error icon" />
+          ) : null}
           <Input
-            errors={errors}
+            error={Boolean(errors.lastName)}
             type="text"
             id="lastName"
             placeholder="Last Name"
@@ -51,8 +57,11 @@ function Form() {
           <Error>{errors.lastName && errors.lastName.message}</Error>
         </InputBlock>
         <InputBlock>
+          {errors.email?.message ? (
+            <ErrorImg src={ErrorIcon} alt="error icon" />
+          ) : null}
           <Input
-            errors={errors}
+            error={Boolean(errors.email)}
             type="email"
             id="email"
             placeholder="Email Address"
@@ -61,8 +70,11 @@ function Form() {
           <Error>{errors.email && errors.email.message}</Error>
         </InputBlock>
         <InputBlock>
+          {errors.password?.message ? (
+            <ErrorImg src={ErrorIcon} alt="error icon" />
+          ) : null}
           <Input
-            errors={errors}
+            error={Boolean(errors.password)}
             type="password"
             id="password"
             placeholder="Password"
@@ -83,7 +95,6 @@ function Form() {
 export default Form;
 
 const Container = styled.div`
-  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -130,34 +141,37 @@ const FormContainer = styled.form`
 const InputBlock = styled.div`
   width: 100%;
   max-width: 540px;
+  position: relative;
+`;
+
+const ErrorImg = styled.img`
+  position: absolute;
+  top: 50%;
+  right: 27px;
+  transform: translate(0, -90%);
 `;
 
 const Input = styled.input(
-  (props: { errors: Partial<FieldErrorsImpl<FormTypes>> }) => css`
+  (props: { error: boolean }) => css`
     width: 100%;
     height: 56px;
     border-radius: 5px;
     padding-left: 19.41px;
     background: #ffffff;
-    border: ${props.errors.firstName?.message ||
-    props.errors.lastName?.message ||
-    props.errors.email?.message ||
-    props.errors.password?.message
-      ? "2px solid #FF7979"
-      : "1px solid #dedede"};
+    border: ${props.error ? "2px solid #FF7979" : "1px solid #dedede"};
     font-family: "Poppins", sans-serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 26px;
     letter-spacing: 0.25px;
-    color: #3d3b48;
+    color: ${props.error ? "#FF7979" : "#3d3b48"};
 
     &::placeholder {
       color: rgba(61, 59, 72, 0.75);
     }
 
     &:focus {
-      outline: 1px solid #5e54a4;
+      outline: ${props.error ? "none" : "1px solid #5e54a4"};
     }
   `
 );
@@ -177,6 +191,11 @@ const Button = styled.button`
   line-height: 26px;
   text-align: center;
   color: #ffffff;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background: #77e2b3;
+  }
 `;
 
 const Terms = styled.p`
